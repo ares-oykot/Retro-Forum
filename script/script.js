@@ -15,7 +15,7 @@ const displayPost = (posts) => {
                             class="mb-6 flex flex-col md:flex-row p-2 lg:p-10 bg-gray-100 hover:bg-[#eeeeff] border border-white hover:border-[#797DFC] duration-100 rounded-xl">
                             <div class="relative">
                                 <img class="w-20 bg-white rounded-lg"src="${post?.image}" alt="">
-                                <img class="absolute -top-2 lg:-top-2 left-16 lg:left-14" src="./images/green.png" alt="">
+                                <img class="absolute -top-2 lg:-top-2 left-16 lg:left-14" src="${post?.isActive ? './images/green.png' : './images/red.png'}" alt="">
                             </div>
                             <!-- card info section -->
                             <div class="w-full md:ml-5">
@@ -42,7 +42,7 @@ const displayPost = (posts) => {
                                                 <p class="text-gray-500">${post?.posted_time} min</p>
                                             </div>
                                         </div>
-                                        <button><img class="w-6 h-6" src="./images/email.png" alt=""></button>
+                                        <button onClick="handleMark('${post?.id}')"><img class="w-6 h-6" src="./images/email.png" alt=""></button>
                                     </div>
                                 </div>
                             </div>
@@ -76,6 +76,31 @@ const loadingSkeleton = (isLoading) => {
         skeleton.classList.add('hidden')
     }
 }
-
+const handleMark = (id) => {
+    fetch('https://openapi.programming-hero.com/api/retro-forum/posts')
+    .then(res => res.json())
+    .then(data => {
+        const posts = data.posts;
+        const singlePost = posts.find(post => post.id === parseInt(id))
+        showMarkPost(singlePost);
+    })
+}
 loadPost();
-
+const showMarkPost = (post) => {
+    const markPostCount = document.getElementById('mark-post-count');
+    markPostCount.innerText = parseInt(markPostCount.innerText) + 1
+    const markContainer = document.getElementById('mark-container');
+    const markTitle = document.createElement('div');
+    markTitle.innerHTML = `
+        <div class="mt-3 flex justify-between items-center bg-white rounded-lg p-3 md:gap-1">
+            <div class="">
+                <p class="">${post?.title}</p>
+            </div>
+            <div class="w-32 flex items-center gap-2">
+                <img src="./images/eye.png" alt="">
+                <span>${post?.view_count}</span>
+            </div>
+        </div>
+    `
+    markContainer.appendChild(markTitle);
+}
