@@ -81,9 +81,9 @@
                     </h1>
                     <h5 class="text-xs md:text-lg">Share your favorite opinion and win and wp forum coffee mug!</h5>
                     <div class="relative w-56 md:w-full md:max-w-sm">
-                        <input type="text" placeholder="Search here anything"
+                        <input id="search-text" type="text" placeholder="Search here anything"
                             class="text-black w-full pr-16 md:pr-28 py-2 md:py-3 pl-3 md:pl-5 rounded-2xl md:rounded-full outline-none text-xs md:text-base" />
-                        <button
+                        <button onclick="handleSearch()"
                             class="absolute right-1 md:right-2 top-1/2 transform -translate-y-1/2 md:h-9 px-2 py-1 md:px-5 text-xs md:text-base rounded-full bg-[#797DFC] hover:bg-[#6368ff] duration-100">
                             Search
                         </button>
@@ -109,9 +109,35 @@
             </div>
         </section>
     </header>
-    <main>
+    <main class="max-w-screen-xl mx-auto min-h-screen">
+        <section class="mt-10 mx-5 md:mx-10 lg:mx-16">
+            <div class="text-center md:px-60">
+                <h3 class="text-4xl font-bold">Let’s Discuss</h3>
+                <p class="mt-4 text-gray-500">Yes, you can run unit tests and view the results directly within the app.
+                    The integrated testing
+                    features
+                    allow for a streamlined .</p>
+            </div>
+            <!-- posts -->
+            <div class="flex flex-col md:flex-row md:gap-6 mt-3 md:mt-10">
+                <div class="md:w-8/12">
+                    <div id="skeleton" class="space-y-6">
+                        <div class="skeleton h-52 w-full"></div>
+                        <div class="skeleton h-52 w-full"></div>
+                        <div class="skeleton h-52 w-full"></div>
+                        <div class="skeleton h-52 w-full"></div>
+                    </div>
+                    <div id="posts-container" class=""></div>
+                </div>
+                <div class="md:flex-1 min-h-screen bg-gray-100 rounded-xl"></div>
+            </div>
+        </section>
     </main>
-    <footer></footer>
+    <footer class="min-h-screen border my-20">
+        <h4>Footer</h4>
+    </footer>
+    <!-- Script -->
+    <script src="./script/script.js"></script>
 </body>
 
 </html>
