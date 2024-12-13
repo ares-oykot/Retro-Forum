@@ -78,14 +78,14 @@ const loadingSkeleton = (isLoading) => {
 }
 const handleMark = (id) => {
     fetch('https://openapi.programming-hero.com/api/retro-forum/posts')
-    .then(res => res.json())
-    .then(data => {
-        const posts = data.posts;
-        const singlePost = posts.find(post => post.id === parseInt(id))
-        showMarkPost(singlePost);
-    })
+        .then(res => res.json())
+        .then(data => {
+            const posts = data.posts;
+            const singlePost = posts.find(post => post.id === parseInt(id))
+            showMarkPost(singlePost);
+        })
 }
-loadPost();
+
 const showMarkPost = (post) => {
     const markPostCount = document.getElementById('mark-post-count');
     markPostCount.innerText = parseInt(markPostCount.innerText) + 1
@@ -104,3 +104,43 @@ const showMarkPost = (post) => {
     `
     markContainer.appendChild(markTitle);
 }
+
+loadPost();
+
+const loadLatestPost = async () => {
+    const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts');
+    const data = await res.json();
+    displayLatestPost(data);
+
+}
+const displayLatestPost = (posts) => {
+    const latestPosts = document.getElementById('latest-post');
+    posts.forEach((post) => {
+        const postLatestCard = document.createElement('div');
+        postLatestCard.innerHTML = `
+                <div class="border p-5 rounded-2xl">
+                    <div class="">
+                        <img class="rounded-2xl" src="${post?.cover_image}"
+                            alt="">
+                    </div>
+                    <div class="flex gap-2 items-center mt-4">
+                        <img src="./images/calender.png" alt="">
+                        <span class="text-gray-500 text-sm">${post?.author?.posted_date ? post?.author?.posted_date : 'No publish date'}</span>
+                    </div>
+                    <h4 class="text-lg font-semibold mt-1">${post?.title}</h4>
+                    <p class="text-sm mt-1 text-gray-500">${post?.description}</p>
+                    <div class="flex items-center gap-3 mt-2">
+                        <img class="w-12 rounded-full"
+                            src="${post?.profile_image}" alt="">
+                        <div class="">
+                            <h5 class="font-semibold">${post?.author?.name}</h5>
+                            <span class="text-sm">${post?.author?.designation ? post?.author?.designation : 'Unknown'}</span>
+                        </div>
+                    </div>
+                </div>
+    `
+        latestPosts.appendChild(postLatestCard);
+    })
+
+}
+loadLatestPost();
